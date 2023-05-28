@@ -1,9 +1,9 @@
 const db = require("../config/db");
 
-exports.insertPost = (id, image, callback) => {
+exports.insertPost = (date, description, id, image, callback) => {
   db.query(
-    "INSERT INTO post (id_author, image) VALUES (?,?)",
-    [id, image],
+    "INSERT INTO post (date, description,id_author, image) VALUES (?,?,?,?)",
+    [date, description, id, image],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -13,4 +13,15 @@ exports.insertPost = (id, image, callback) => {
       }
     }
   );
+};
+
+exports.getPostById = (id, callback) => {
+  db.query("SELECT * FROM post WHERE id_author = ?", [id], (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  });
 };
