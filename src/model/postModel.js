@@ -25,3 +25,29 @@ exports.getPostById = (id, callback) => {
     }
   });
 };
+
+exports.updateProfileImage = (id, image, callback) => {
+  db.query(
+    "UPDATE user SET image = ?  WHERE id = ?",
+    [image, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        callback(err, null);
+      } else {
+        callback(null, result);
+      }
+    }
+  );
+};
+
+exports.deleteProfileImage = (id, callback) => {
+  db.query("UPDATE user SET image = ''  WHERE id = ?", [id], (err, result) => {
+    if (err) {
+      console.log(err);
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  });
+};
